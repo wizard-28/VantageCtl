@@ -12,7 +12,7 @@ Item {
     readonly property bool allowAttach: true
 
     property real contentPreferredWidth: Math.round(540 * Style.uiScaleRatio)
-    property real contentPreferredHeight: Math.round(mainLayout.implicitHeight * Style.uiScaleRatio + Style.marginS)
+    property real contentPreferredHeight: Math.round(mainLayout.implicitHeight * Style.uiScaleRatio + Style.margin2M)
 
     property int fanModeIndex: fanModeToIndex(vantage.fan.value)
 
@@ -198,8 +198,7 @@ Item {
 
         NBox {
             Layout.fillWidth: true
-            // Layout.fillHeight: true
-            height: list.height 
+            implicitHeight: list.contentHeight + 2 * Style.marginM 
 
             NListView {
                 id: list
@@ -210,20 +209,34 @@ Item {
                   leftMargin: Style.margin2M
                 }
                 spacing: Style.marginS
-                height: Math.max(4 * 64, model.length * 64) // Allow up to 4 items at once
 
                 model: [
                     {
                         visible: vantage.fnLock.available,
-                        icon: "keyboard",
+                        baseIcon: "keyboard",
                         title: "Fn Lock",
                         description: "Access multimedia keys without holding Fn",
                         checked: vantage.fnLock.value,
                         onToggled: checked => vantage.setFnLockMode(checked)
                     },
                     {
+                      visible: true,
+                      baseIcon: "brand-windows",
+                      title: "Super key",
+                      description: "Enables tthe Super/Windows key",
+                      checked: false
+                    },
+                    {
+                      visible: true,
+                      baseIcon: "device-laptop",
+                      title: "Touchpad",
+                      description: "Enables the laptop's touchpad",
+                      checked: false
+                    },
+                    {
                         visible: vantage.conservation.available,
-                        icon: vantage.conservation.value ? "battery-eco" : "battery-charging",
+                        baseIcon: "battery-charging",
+                        checkedIcon: "battery-eco",
                         title: "Battery conservation mode",
                         description: "Limits the charge of the battery to extend its lifespan",
                         checked: vantage.conservation.value,
@@ -231,24 +244,39 @@ Item {
                     },
                     {
                         visible: false,
-                        icon: "battery-charging",
+                        baseIcon: "battery-charging",
                         title: "Battery fast charge mode",
                         description: "Allows the battery to charge faster",
                         checked: false
                     },
                     {
                         visible: vantage.alwaysOnUSB.available,
-                        icon: "device-usb",
+                        baseIcon: "device-usb",
                         title: "Always On USB",
                         description: "Keeps the USB ports always powered on",
                         checked: vantage.alwaysOnUSB.value,
                         onToggled: checked => vantage.setAlwaysOnUSBMode(checked)
+                    },
+                    {
+                      visible: true,
+                      baseIcon: "bolt",
+                      title: "Display Overdrive",
+                      description: "Reduces the laptop's display latency",
+                      checked: false
+                    },
+                    {
+                      visible: true,
+                      baseIcon: "cpu",
+                      title: "Hybrid graphics mode",
+                      description: "Enables the laptop's integrated graphics",
+                      checked: false
                     }
                 ].filter(item => item.visible)
 
 
                 delegate: SettingsRow {
-                    icon: modelData.icon
+                    baseIcon: modelData.baseIcon
+                    checkedIcon: modelData.checkedIcon ?? ""
                     title: modelData.title
                     description: modelData.description
                     checked: modelData.checked
