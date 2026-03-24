@@ -32,7 +32,6 @@ Item {
   }
 
   function indexToLabel(index) {
-    Logger.e("Vantage", `index: ${index} label: ${fanModesUI[index].label}`)
     return fanModesUI[index].label
   }
 
@@ -206,7 +205,8 @@ Item {
             icon: "device-usb",
             title: "Always On USB",
             description: "Keeps the USB ports always powered on",
-            checked: checked => vantage.setAlwaysOnUSBMode(checked)
+            checked: vantage.alwaysOnUSB.value,
+            onToggled: checked => vantage.setAlwaysOnUSBMode(checked)
           }
         ].filter(item => item.visible)
 
