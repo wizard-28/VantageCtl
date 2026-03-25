@@ -79,7 +79,7 @@ Item {
 
                 NIcon {
                     pointSize: Style.fontSizeXXL
-                    icon: "heart"
+                    icon: "letter-v"
                 }
 
                 ColumnLayout {
