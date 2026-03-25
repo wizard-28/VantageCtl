@@ -190,7 +190,7 @@ Item {
 
                     NIconButton {
                         icon: "windmill"
-                        onClicked: vantage.fan.set(2)
+                        onClicked: vantage.fan.set(vantage.fanModes.DustCleaning)
                     }
                 }
             }

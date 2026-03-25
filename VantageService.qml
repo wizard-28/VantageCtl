@@ -23,6 +23,7 @@ Item {
     readonly property alias fnLock: _fnLock
     readonly property alias alwaysOnUSB: _alwaysOnUSB
 
+
     readonly property var controls: [
         fan,
         conservation,
@@ -30,25 +31,30 @@ Item {
         alwaysOnUSB
     ]
 
+    readonly property var fanModes: ({
+        SuperSilent: 0,
+        Standard: 1,
+        DustCleaning: 2,
+        EfficientThermalDissipation: 4
+    })
+
     SysfsProperty {
         id: _fan
         path: root.fanFile
         label: "fan mode"
-        validValues: [0,1,2,4]
+        validValues: [root.fanModes.SuperSilent, root.fanModes.Standard, root.fanModes.DustCleaning, root.fanModes.EfficientThermalDissipation]
         parser: function (raw) {
             const v = parseInt(raw?.trim());
             if (isNaN(v)) {
                 Logger.w("Vantage", "Invalid fan value:", raw);
                 return undefined;
             }
-            const bits = v & 7;
-            if (bits === 4)
-                return 4;
-            if (bits === 2)
-                return 2;
-            if (bits === 1)
-                return 1;
-            return 0;
+            const bits = v & 7; // Extarct last 3 bits
+            if (this.validValues.includes(bits)) {
+              return bits;
+            }
+
+            return root.fanModes.SuperSilent;
         }
     }
 
