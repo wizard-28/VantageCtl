@@ -100,7 +100,7 @@ Item {
                     icon: "close"
                     tooltipText: "Close"
                     baseSize: Style.baseWidgetSize * 0.8
-                    onClicked: pluginApi.closePanel(pluginApi.panelOpenScreen)
+                    onClicked: root.pluginApi.closePanel(root.pluginApi.panelOpenScreen)
                 }
             }
         }
@@ -128,7 +128,7 @@ Item {
                         }
 
                         NText {
-                            text: indexToLabel(root.fanModeIndex)
+                            text: root.indexToLabel(root.fanModeIndex)
                             color: Color.mOnSurfaceVariant
                         }
                     }
@@ -140,7 +140,7 @@ Item {
                         stepSize: 1
                         snapAlways: true
                         heightRatio: 0.5
-                        value: fanModeToIndex(vantage.fan.value)
+                        value: root.fanModeToIndex(vantage.fan.value)
 
                         onMoved: v => {
                             root.fanModeIndex = v;
@@ -198,15 +198,15 @@ Item {
 
         NBox {
             Layout.fillWidth: true
-            implicitHeight: list.contentHeight + 2 * Style.marginM 
+            implicitHeight: list.contentHeight + 2 * Style.marginM
 
             NListView {
                 id: list
 
                 anchors {
-                  fill: parent
-                  margins: Style.marginM
-                  leftMargin: Style.margin2M
+                    fill: parent
+                    margins: Style.marginM
+                    leftMargin: Style.margin2M
                 }
                 spacing: Style.marginS
 
@@ -220,18 +220,18 @@ Item {
                         onToggled: checked => vantage.setFnLockMode(checked)
                     },
                     {
-                      visible: true,
-                      baseIcon: "brand-windows",
-                      title: "Super key",
-                      description: "Enables tthe Super/Windows key",
-                      checked: false
+                        visible: true,
+                        baseIcon: "brand-windows",
+                        title: "Super key",
+                        description: "Enables tthe Super/Windows key",
+                        checked: false
                     },
                     {
-                      visible: true,
-                      baseIcon: "device-laptop",
-                      title: "Touchpad",
-                      description: "Enables the laptop's touchpad",
-                      checked: false
+                        visible: true,
+                        baseIcon: "device-laptop",
+                        title: "Touchpad",
+                        description: "Enables the laptop's touchpad",
+                        checked: false
                     },
                     {
                         visible: vantage.conservation.available,
@@ -258,23 +258,23 @@ Item {
                         onToggled: checked => vantage.setAlwaysOnUSBMode(checked)
                     },
                     {
-                      visible: true,
-                      baseIcon: "bolt",
-                      title: "Display Overdrive",
-                      description: "Reduces the laptop's display latency",
-                      checked: false
+                        visible: true,
+                        baseIcon: "bolt",
+                        title: "Display Overdrive",
+                        description: "Reduces the laptop's display latency",
+                        checked: false
                     },
                     {
-                      visible: true,
-                      baseIcon: "cpu",
-                      title: "Hybrid graphics mode",
-                      description: "Enables the laptop's integrated graphics",
-                      checked: false
+                        visible: true,
+                        baseIcon: "cpu",
+                        title: "Hybrid graphics mode",
+                        description: "Enables the laptop's integrated graphics",
+                        checked: false
                     }
                 ].filter(item => item.visible)
 
-
                 delegate: SettingsRow {
+                    required property var modelData
                     baseIcon: modelData.baseIcon
                     checkedIcon: modelData.checkedIcon ?? ""
                     title: modelData.title
