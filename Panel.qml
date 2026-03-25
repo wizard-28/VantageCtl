@@ -216,6 +216,7 @@ Item {
                         baseIcon: "keyboard",
                         title: "Fn Lock",
                         description: "Access multimedia keys without holding Fn",
+                        tooltip: "When enabled, the multimedia functions will be accessible without having to hold the Fn key.",
                         checked: vantage.fnLock.value,
                         onToggled: checked => vantage.fnLock.set(checked)
                     },
@@ -224,6 +225,7 @@ Item {
                         baseIcon: "brand-windows",
                         title: "Super key",
                         description: "Enables the Super/Windows key",
+                        tooltip: "Whether to enable or not the Super (Windows) key.",
                         checked: vantage.superKey.value,
                         onToggled: checked => vantage.superKey.set(checked)
                     },
@@ -232,6 +234,7 @@ Item {
                         baseIcon: "device-laptop",
                         title: "Touchpad",
                         description: "Enables the laptop's touchpad",
+                        tooltip: "Whether to enable orthe laptop's touchpad.",
                         checked: vantage.touchpad.value,
                         onToggled: checked => vantage.touchpad.set(checked)
                     },
@@ -241,6 +244,7 @@ Item {
                         checkedIcon: "battery-eco",
                         title: "Battery conservation mode",
                         description: "Limits the charge of the battery to extend its lifespan",
+                        tooltip: "When enabled, the battery will not charge above a certain value (usually around 50-70%) in order to extend its lifespan.",
                         checked: vantage.conservation.value,
                         onToggled: checked => vantage.conservation.set(checked)
                     },
@@ -249,6 +253,7 @@ Item {
                         baseIcon: "battery-charging",
                         title: "Battery fast charge mode",
                         description: "Allows the battery to charge faster",
+                        tooltip: "When enabeld, allows tthe battery to charge faster at the cost of its lifespan.",
                         checked: vantage.fastCharge.value,
                         onToggled: checked => vantage.fastCharge.set(checked)
                     },
@@ -257,6 +262,7 @@ Item {
                         baseIcon: "device-usb",
                         title: "Always On USB",
                         description: "Keeps the USB ports always powered on",
+                        tooltip: "Keeps the USB ports powered on even if the laptop is suspended.",
                         checked: vantage.alwaysOnUSB.value,
                         onToggled: checked => vantage.alwaysOnUSB.set(checked)
                     },
@@ -265,6 +271,7 @@ Item {
                         baseIcon: "bolt",
                         title: "Display Overdrive",
                         description: "Reduces the laptop's display latency",
+                        tooltip: "Reduces the display latency in order to limit ghosting and trailing images.\nIncreases power consumption and may introduce othher graphical defects.",
                         checked: vantage.overdrive.value,
                         onToggled: checked => vantage.overdrive.set(checked)
                     },
@@ -273,6 +280,7 @@ Item {
                         baseIcon: "cpu",
                         title: "Hybrid graphics mode",
                         description: "Enables the laptop's integrated graphics",
+                        tooltip: "Enables the processor's integrated graphics.\nDecreases power consupmtion by allowing the dedicated GPU to power down and work only when necessary but slightly decreases performance.\nReboot is required to apply the change.",
                         checked: vantage.hybrid.value,
                         onToggled: checked => vantage.hybrid.set(checked)
                     }
@@ -284,6 +292,7 @@ Item {
                     checkedIcon: modelData.checkedIcon ?? ""
                     title: modelData.title
                     description: modelData.description
+                    tooltip: modelData.tooltip
                     checked: modelData.checked
                     onToggled: checked => modelData.onToggled(checked)
                 }

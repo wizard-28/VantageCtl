@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import qs.Commons
 import qs.Widgets
+import qs.Services.UI
+import qs.Services.System
 
 Item {
     id: root
@@ -11,6 +13,7 @@ Item {
     readonly property string icon: root.checked ? (checkedIcon === "" ? root.baseIcon + "-filled" : checkedIcon) : baseIcon
     property string title
     property string description
+    property string tooltip
     property bool checked
 
     signal toggled(bool checked)
@@ -21,6 +24,20 @@ Item {
     RowLayout {
         anchors.fill: parent
         spacing: Style.marginM
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                TooltipService.show(root, root.tooltip, BarService.getTooltipDirection());
+            }
+
+            onExited: {
+                TooltipService.hide();
+            }
+        }
 
         NIcon {
             icon: root.icon
