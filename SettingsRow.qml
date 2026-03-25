@@ -21,23 +21,23 @@ Item {
     width: ListView.view.width
     height: 64
 
+    MouseArea {
+        id: mouseArea
+        hoverEnabled: true
+        anchors.fill: parent
+
+        onEntered: {
+            TooltipService.show(root, root.tooltip, BarService.getTooltipDirection());
+        }
+
+        onExited: {
+            TooltipService.hide();
+        }
+    }
+
     RowLayout {
         anchors.fill: parent
         spacing: Style.marginM
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                TooltipService.show(root, root.tooltip, BarService.getTooltipDirection());
-            }
-
-            onExited: {
-                TooltipService.hide();
-            }
-        }
 
         NIcon {
             icon: root.icon
