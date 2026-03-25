@@ -190,7 +190,7 @@ Item {
 
                     NIconButton {
                         icon: "windmill"
-                        onClicked: vantage.setFanMode(2)
+                        onClicked: vantage.fan.set(2)
                     }
                 }
             }
@@ -217,13 +217,13 @@ Item {
                         title: "Fn Lock",
                         description: "Access multimedia keys without holding Fn",
                         checked: vantage.fnLock.value,
-                        onToggled: checked => vantage.setFnLockMode(checked)
+                        onToggled: checked => vantage.fnLock.set(checked)
                     },
                     {
                         visible: true,
                         baseIcon: "brand-windows",
                         title: "Super key",
-                        description: "Enables tthe Super/Windows key",
+                        description: "Enables the Super/Windows key",
                         checked: false
                     },
                     {
@@ -240,7 +240,7 @@ Item {
                         title: "Battery conservation mode",
                         description: "Limits the charge of the battery to extend its lifespan",
                         checked: vantage.conservation.value,
-                        onToggled: checked => vantage.setConservationMode(checked)
+                        onToggled: checked => vantage.conservation.set(checked)
                     },
                     {
                         visible: false,
@@ -255,7 +255,7 @@ Item {
                         title: "Always On USB",
                         description: "Keeps the USB ports always powered on",
                         checked: vantage.alwaysOnUSB.value,
-                        onToggled: checked => vantage.setAlwaysOnUSBMode(checked)
+                        onToggled: checked => vantage.alwaysOnUSB.set(checked)
                     },
                     {
                         visible: true,

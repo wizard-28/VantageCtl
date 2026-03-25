@@ -11,13 +11,11 @@ Item {
     // ===== STATE =====
     property bool available: fan.available || conservation.available || fnLock.available
 
-    readonly property string basePath: "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00"
-    readonly property string fanFile: basePath + "/fan_mode"
-    readonly property string conservationFile: basePath + "/conservation_mode"
-    readonly property string fnLockFile: basePath + "/fn_lock"
-    readonly property string alwaysOnUSBFile: basePath + "/usb_charging"
-
-    readonly property var fanModes: [0, 1, 2, 4]
+    readonly property string ideapadModPath: "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00"
+    readonly property string fanFile: ideapadModPath + "/fan_mode"
+    readonly property string conservationFile: ideapadModPath + "/conservation_mode"
+    readonly property string fnLockFile: ideapadModPath + "/fn_lock"
+    readonly property string alwaysOnUSBFile: ideapadModPath + "/usb_charging"
 
     // ===== SYSFS PROPERTIES =====
     readonly property alias fan: _fan
@@ -25,10 +23,18 @@ Item {
     readonly property alias fnLock: _fnLock
     readonly property alias alwaysOnUSB: _alwaysOnUSB
 
+    readonly property var controls: [
+        fan,
+        conservation,
+        fnLock,
+        alwaysOnUSB
+    ]
+
     SysfsProperty {
         id: _fan
         path: root.fanFile
         label: "fan mode"
+        validValues: [0,1,2,4]
         parser: function (raw) {
             const v = parseInt(raw?.trim());
             if (isNaN(v)) {
@@ -36,11 +42,11 @@ Item {
                 return undefined;
             }
             const bits = v & 7;
-            if (bits & 4)
+            if (bits === 4)
                 return 4;
-            if (bits & 2)
+            if (bits === 2)
                 return 2;
-            if (bits & 1)
+            if (bits === 1)
                 return 1;
             return 0;
         }
@@ -67,10 +73,9 @@ Item {
     // ===== INIT =====
     Component.onCompleted: {
         Logger.i("Vantage", "Service starting...");
-        fan.checkAvailability();
-        conservation.checkAvailability();
-        fnLock.checkAvailability();
-        alwaysOnUSB.checkAvailability();
+        for (let c of controls) {
+          c.checkAvailability();
+        }
     }
 
     function refresh() {
@@ -79,33 +84,8 @@ Item {
             return;
         }
         Logger.i("Vantage", "Refreshing values...");
-        fan.reload();
-        conservation.reload();
-        fnLock.reload();
-        alwaysOnUSB.reload();
-    }
-
-    function setFanMode(mode) {
-        if (!fanModes.includes(mode)) {
-            Logger.e("Vantage", "Invalid fan mode:", mode);
-            return;
+        for (let c of controls) {
+          c.reload();
         }
-        Logger.i("Vantage", "Setting fan mode →", mode);
-        fan.write(mode);
-    }
-
-    function setConservationMode(enabled) {
-        Logger.i("Vantage", "Setting conservation mode →", enabled);
-        conservation.write(enabled ? 1 : 0);
-    }
-
-    function setFnLockMode(enabled) {
-        Logger.i("Vantage", "Setting fnLock mode ->", enabled);
-        fnLock.write(enabled ? 1 : 0);
-    }
-
-    function setAlwaysOnUSBMode(enabled) {
-        Logger.i("Vantage", "Setting alwaysOnUSB mode ->", enabled);
-        alwaysOnUSB.write(enabled ? 1 : 0);
     }
 }
