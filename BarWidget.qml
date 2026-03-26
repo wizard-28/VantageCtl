@@ -35,16 +35,7 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-
-        onEntered: {
-            TooltipService.show(root, "Widget tooltip text", BarService.getTooltipDirection());
-        }
-
-        onExited: {
-            TooltipService.hide();
-        }
 
         onClicked: {
             if (pluginApi) {
