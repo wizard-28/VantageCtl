@@ -1,0 +1,59 @@
+{
+  "widget": {
+    "title": "Noctalia Vantage"
+  },
+  "panel": {
+    "close": "Fermer",
+    "fan": {
+      "title": "Mode du ventilateur",
+      "mode": {
+        "super_silent": "Super silencieux",
+        "standard": "Standard",
+        "dust_cleaning": "Nettoyage de la poussiere",
+        "efficient_thermal_dissipation": "Dissipation thermique efficace"
+      }
+    },
+    "toggle": {
+      "fn_lock": {
+        "title": "Verrouillage Fn",
+        "description": "Acceder aux touches multimedia sans maintenir Fn",
+        "tooltip": "Lorsqu'il est active, les fonctions multimedia sont accessibles sans maintenir la touche Fn."
+      },
+      "super_key": {
+        "title": "Touche Super",
+        "description": "Active la touche Super/Windows",
+        "tooltip": "Definit si la touche Super (Windows) est activee ou non."
+      },
+      "touchpad": {
+        "title": "Pave tactile",
+        "description": "Active le pave tactile de l'ordinateur portable",
+        "tooltip": "Definit si le pave tactile de l'ordinateur portable est active ou non."
+      },
+      "conservation": {
+        "title": "Mode de conservation de la batterie",
+        "description": "Limite la charge de la batterie pour prolonger sa duree de vie",
+        "tooltip": "Lorsqu'il est active, la batterie ne charge pas au-dela d'une certaine valeur (generalement autour de 50-70 %) afin de prolonger sa duree de vie."
+      },
+      "fast_charge": {
+        "title": "Mode de charge rapide de la batterie",
+        "description": "Permet a la batterie de se charger plus rapidement",
+        "tooltip": "Lorsqu'il est active, la batterie peut se charger plus rapidement au detriment de sa duree de vie."
+      },
+      "always_on_usb": {
+        "title": "USB toujours alimente",
+        "description": "Maintient les ports USB toujours sous tension",
+        "tooltip": "Maintient les ports USB sous tension meme lorsque l'ordinateur portable est suspendu."
+      },
+      "overdrive": {
+        "title": "Overdrive de l'ecran",
+        "description": "Reduit la latence de l'ecran de l'ordinateur portable",
+        "tooltip": "Reduit la latence d'affichage afin de limiter les images fantomes et les traines.\nAugmente la consommation d'energie et peut introduire d'autres defauts graphiques."
+      },
+      "hybrid": {
+        "title": "Mode graphique hybride",
+        "description": "Active la carte graphique integree de l'ordinateur portable",
+        "tooltip": "Active la carte graphique integree au processeur.\nReduit la consommation d'energie en permettant au GPU dedie de se mettre en veille et de fonctionner seulement si necessaire, mais diminue legerement les performances.\nUn redemarrage est necessaire pour appliquer ce changement."
+      }
+    }
+  }
+}
