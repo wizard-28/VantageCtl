@@ -16,6 +16,18 @@ jobs:
         run: |
           git clone https://x-access-token:${{ secrets.NOCTALIA_PLUGINS_TOKEN }}@github.com/wizard-28/noctalia-plugins.git
 
+      - name: Sync fork with upstream
+        run: |
+          cd noctalia-plugins
+
+          git remote add upstream https://github.com/noctalia-dev/noctalia-plugins.git
+
+          git fetch upstream
+
+          # Safe as it's my fork
+          git reset --hard upstream/main
+          git push --force origin main
+
       - name: Copy files
         run: |
           set -e
@@ -25,18 +37,18 @@ jobs:
           mkdir -p "${TARGET}"
 
           rsync -av --exclude='.git' \
-                    --exclude='.github' \
-                    --exclude="noctalia-plugins" \
-                    --exclude=".gitignore" \
-                    --exclude=".qmlls.ini" \
-                    ./ "$TARGET/"
+              --exclude='.github' \
+              --exclude="noctalia-plugins" \
+              --exclude=".gitignore" \
+              --exclude=".qmlls.ini" \
+              ./ "$TARGET/"
 
       - name: Commit & Push
         run: |
           cd noctalia-plugins
 
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "wizard-28"
+          git config user.email "49679481+wizard-28@users.noreply.github.com"
 
           git add .
           git commit -m "noctalia-vantage: Update to ${{ github.event.release.tag_name }}"
