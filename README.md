@@ -9,7 +9,7 @@
   - Display overdrive
   - Hybrid GPU mode
 
-- Ideapad kernel module for:
+- Ideapad kernel module (already in the stable linux kernel) for:
   - Fan control
   - Fn lock toggle
   - Battery conservation mode
@@ -32,7 +32,7 @@ and adds your user to that group.
 ## Issues
 
 - `Standard` and `Efficient Thermal Dissipation` fan control modes don't work on
-  my Ideapad.
+  my Ideapad. They operate like `Dust Cleaning` mode.
 
 ## Disclaimer
 
