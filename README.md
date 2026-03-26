@@ -2,6 +2,11 @@
 
 ![preview](preview.png)
 
+An unofficial [Noctalia Shell](https://noctalia.dev/) plugin to bring [Lenovo Vantage](https://www.lenovo.com/us/en/software/vantage/) features to Linux.
+
+> [!NOTE]
+> Please open issues and send PRs at <https://github.com/wizard-28/NoctaliaVantage> and **NOT** to the [noctalia-plugins](https://github.com/noctalia-dev/noctalia-plugins) repository!
+
 ## Requirements
 
 - [LenovoLegionLinux](https://github.com/johnfanv2/LenovoLegionLinux) kernel module for:
