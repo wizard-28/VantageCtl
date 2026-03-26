@@ -10,29 +10,34 @@ Item {
 
     property var pluginApi: null
 
+    // Helper function to avoid assigning undefined to QStrings
+    function tr(key) {
+        return pluginApi ? pluginApi.tr(key) : "";
+    }
+
     readonly property var geometryPlaceholder: mainLayout
     readonly property bool allowAttach: true
 
     property real contentPreferredWidth: Math.round(540 * Style.uiScaleRatio)
     property real contentPreferredHeight: Math.round((mainLayout.implicitHeight + 2 * Style.marginL) * Style.uiScaleRatio )
 
-    property int fanModeIndex: fanModeToIndex(vantage.fan.value)
+    property int fanModeIndex: fanModeToIndex(VantageService.fan.value)
 
     // ===== MODES =====
     property var fanModesUI: [
         {
             key: 0,
-            label: pluginApi?.tr("panel.fan.mode.super_silent"),
+            label: tr("panel.fan.mode.super_silent"),
             icon: "leaf"
         },
         {
             key: 1,
-            label: pluginApi?.tr("panel.fan.mode.standard"),
+            label: tr("panel.fan.mode.standard"),
             icon: "balance"
         },
         {
             key: 4,
-            label: pluginApi?.tr("panel.fan.mode.efficient_thermal_dissipation"),
+            label: tr("panel.fan.mode.efficient_thermal_dissipation"),
             icon: "bolt"
         }
     ]
@@ -55,14 +60,9 @@ Item {
 
     anchors.fill: parent
 
-    VantageService {
-        id: vantage
-        pluginApi: root.pluginApi
-    }
-
     Component.onCompleted: {
         if (pluginApi) {
-            vantage.refresh();
+            VantageService.refresh();
             Logger.i("NoctaliaVantage", "Panel initialized");
         }
     }
@@ -93,7 +93,7 @@ Item {
                     Layout.fillWidth: true
 
                     NText {
-                        text: pluginApi?.tr("widget.title")
+                        text: tr("widget.title")
                         pointSize: Style.fontSizeL
                         font.weight: Style.fontWeightBold
                         color: Color.mOnSurface
@@ -104,7 +104,7 @@ Item {
 
                 NIconButton {
                     icon: "close"
-                    tooltipText: pluginApi?.tr("panel.close")
+                    tooltipText: tr("panel.close")
                     baseSize: Style.baseWidgetSize * 0.8
                     onClicked: root.pluginApi.closePanel(root.pluginApi.panelOpenScreen)
                 }
@@ -127,7 +127,7 @@ Item {
                         spacing: Style.marginS
 
                         NText {
-                            text: pluginApi?.tr("panel.fan.title")
+                            text: tr("panel.fan.title")
                             font.weight: Style.fontWeightBold
                             color: Color.mOnSurface
                             Layout.fillWidth: true
@@ -146,7 +146,7 @@ Item {
                         stepSize: 1
                         snapAlways: true
                         heightRatio: 0.5
-                        value: root.fanModeToIndex(vantage.fan.value)
+                        value: root.fanModeToIndex(VantageService.fan.value)
 
                         onMoved: v => {
                             root.fanModeIndex = v;
@@ -154,7 +154,7 @@ Item {
 
                         onPressedChanged: pressed => {
                             if (!pressed) {
-                                vantage.fan.set(root.indexToFanMode(root.fanModeIndex));
+                                VantageService.fan.set(root.indexToFanMode(root.fanModeIndex));
                             }
                         }
                     }
@@ -193,7 +193,7 @@ Item {
                     spacing: Style.marginS
 
                     NText {
-                        text: pluginApi?.tr("panel.fan.mode.dust_cleaning")
+                        text: tr("panel.fan.mode.dust_cleaning")
                         pointSize: Style.fontSizeM
                         font.weight: Style.fontWeightBold
                         color: Color.mOnSurface
@@ -202,7 +202,7 @@ Item {
 
                     NIconButton {
                         icon: "windmill"
-                        onClicked: vantage.fan.set(vantage.fanModes.DustCleaning)
+                        onClicked: VantageService.fan.set(VantageService.fanModes.DustCleaning)
                     }
                 }
             }
@@ -223,77 +223,77 @@ Item {
 
                 model: [
                     {
-                        visible: vantage.fnLock.available,
+                        visible: VantageService.fnLock.available,
                         baseIcon: "keyboard",
-                        title: pluginApi?.tr("panel.toggle.fn_lock.title"),
-                        description: pluginApi?.tr("panel.toggle.fn_lock.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.fn_lock.tooltip"),
-                        checked: vantage.fnLock.value,
-                        onToggled: checked => vantage.fnLock.set(checked)
+                        title: tr("panel.toggle.fn_lock.title"),
+                        description: tr("panel.toggle.fn_lock.description"),
+                        tooltip: tr("panel.toggle.fn_lock.tooltip"),
+                        checked: VantageService.fnLock.value,
+                        onToggled: checked => VantageService.fnLock.set(checked)
                     },
                     {
-                        visible: vantage.superKey.available,
+                        visible: VantageService.superKey.available,
                         baseIcon: "brand-windows",
-                        title: pluginApi?.tr("panel.toggle.super_key.title"),
-                        description: pluginApi?.tr("panel.toggle.super_key.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.super_key.tooltip"),
-                        checked: vantage.superKey.value,
-                        onToggled: checked => vantage.superKey.set(checked)
+                        title: tr("panel.toggle.super_key.title"),
+                        description: tr("panel.toggle.super_key.description"),
+                        tooltip: tr("panel.toggle.super_key.tooltip"),
+                        checked: VantageService.superKey.value,
+                        onToggled: checked => VantageService.superKey.set(checked)
                     },
                     {
-                        visible: vantage.touchpad.available,
+                        visible: VantageService.touchpad.available,
                         baseIcon: "device-laptop",
-                        title: pluginApi?.tr("panel.toggle.touchpad.title"),
-                        description: pluginApi?.tr("panel.toggle.touchpad.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.touchpad.tooltip"),
-                        checked: vantage.touchpad.value,
-                        onToggled: checked => vantage.touchpad.set(checked)
+                        title: tr("panel.toggle.touchpad.title"),
+                        description: tr("panel.toggle.touchpad.description"),
+                        tooltip: tr("panel.toggle.touchpad.tooltip"),
+                        checked: VantageService.touchpad.value,
+                        onToggled: checked => VantageService.touchpad.set(checked)
                     },
                     {
-                        visible: vantage.conservation.available,
+                        visible: VantageService.conservation.available,
                         baseIcon: "battery-charging",
                         checkedIcon: "battery-eco",
-                        title: pluginApi?.tr("panel.toggle.conservation.title"),
-                        description: pluginApi?.tr("panel.toggle.conservation.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.conservation.tooltip"),
-                        checked: vantage.conservation.value,
-                        onToggled: checked => vantage.conservation.set(checked)
+                        title: tr("panel.toggle.conservation.title"),
+                        description: tr("panel.toggle.conservation.description"),
+                        tooltip: tr("panel.toggle.conservation.tooltip"),
+                        checked: VantageService.conservation.value,
+                        onToggled: checked => VantageService.conservation.set(checked)
                     },
                     {
-                        visible: vantage.fastCharge.available,
+                        visible: VantageService.fastCharge.available,
                         baseIcon: "battery-charging",
-                        title: pluginApi?.tr("panel.toggle.fast_charge.title"),
-                        description: pluginApi?.tr("panel.toggle.fast_charge.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.fast_charge.tooltip"),
-                        checked: vantage.fastCharge.value,
-                        onToggled: checked => vantage.fastCharge.set(checked)
+                        title: tr("panel.toggle.fast_charge.title"),
+                        description: tr("panel.toggle.fast_charge.description"),
+                        tooltip: tr("panel.toggle.fast_charge.tooltip"),
+                        checked: VantageService.fastCharge.value,
+                        onToggled: checked => VantageService.fastCharge.set(checked)
                     },
                     {
-                        visible: vantage.alwaysOnUSB.available,
+                        visible: VantageService.alwaysOnUSB.available,
                         baseIcon: "device-usb",
-                        title: pluginApi?.tr("panel.toggle.always_on_usb.title"),
-                        description: pluginApi?.tr("panel.toggle.always_on_usb.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.always_on_usb.tooltip"),
-                        checked: vantage.alwaysOnUSB.value,
-                        onToggled: checked => vantage.alwaysOnUSB.set(checked)
+                        title: tr("panel.toggle.always_on_usb.title"),
+                        description: tr("panel.toggle.always_on_usb.description"),
+                        tooltip: tr("panel.toggle.always_on_usb.tooltip"),
+                        checked: VantageService.alwaysOnUSB.value,
+                        onToggled: checked => VantageService.alwaysOnUSB.set(checked)
                     },
                     {
-                        visible: vantage.overdrive.available,
+                        visible: VantageService.overdrive.available,
                         baseIcon: "bolt",
-                        title: pluginApi?.tr("panel.toggle.overdrive.title"),
-                        description: pluginApi?.tr("panel.toggle.overdrive.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.overdrive.tooltip"),
-                        checked: vantage.overdrive.value,
-                        onToggled: checked => vantage.overdrive.set(checked)
+                        title: tr("panel.toggle.overdrive.title"),
+                        description: tr("panel.toggle.overdrive.description"),
+                        tooltip: tr("panel.toggle.overdrive.tooltip"),
+                        checked: VantageService.overdrive.value,
+                        onToggled: checked => VantageService.overdrive.set(checked)
                     },
                     {
-                        visible: vantage.hybrid.available,
+                        visible: VantageService.hybrid.available,
                         baseIcon: "cpu",
-                        title: pluginApi?.tr("panel.toggle.hybrid.title"),
-                        description: pluginApi?.tr("panel.toggle.hybrid.description"),
-                        tooltip: pluginApi?.tr("panel.toggle.hybrid.tooltip"),
-                        checked: vantage.hybrid.value,
-                        onToggled: checked => vantage.hybrid.set(checked)
+                        title: tr("panel.toggle.hybrid.title"),
+                        description: tr("panel.toggle.hybrid.description"),
+                        tooltip: tr("panel.toggle.hybrid.tooltip"),
+                        checked: VantageService.hybrid.value,
+                        onToggled: checked => VantageService.hybrid.set(checked)
                     }
                 ].filter(item => item.visible)
 
@@ -311,3 +311,4 @@ Item {
         }
     }
 }
+

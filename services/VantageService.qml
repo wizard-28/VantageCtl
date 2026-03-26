@@ -1,25 +1,10 @@
+pragma Singleton
+
 import QtQuick
 import qs.Commons
 
-Item {
+QtObject {
     id: root
-    visible: false
-
-    property var pluginApi: null
-
-    // ===== STATE =====
-    property bool available: fan.available || conservation.available || fnLock.available
-
-    // ===== SYSFS PROPERTIES =====
-    readonly property alias fan: _fan
-    readonly property alias conservation: _conservation
-    readonly property alias fnLock: _fnLock
-    readonly property alias alwaysOnUSB: _alwaysOnUSB
-    readonly property alias superKey: _superKey
-    readonly property alias touchpad: _touchpad
-    readonly property alias fastCharge: _fastcharge
-    readonly property alias overdrive: _overdrive
-    readonly property alias hybrid: _hybrid // TODO: reboot after applying changes
 
     readonly property var controls: [fan, conservation, fnLock, alwaysOnUSB, superKey, touchpad, fastCharge, overdrive, hybrid]
 
@@ -44,8 +29,7 @@ Item {
         path: basePath + "/" + file
     }
 
-    IdeapadSysfsProperty {
-        id: _fan
+    property IdeapadSysfsProperty fan: IdeapadSysfsProperty {
         file: "fan_mode"
         label: "fan mode"
         validValues: [root.fanModes.SuperSilent, root.fanModes.Standard, root.fanModes.DustCleaning, root.fanModes.EfficientThermalDissipation]
@@ -64,50 +48,43 @@ Item {
         }
     }
 
-    IdeapadSysfsProperty {
-        id: _conservation
+    property IdeapadSysfsProperty conservation: IdeapadSysfsProperty {
         file: "conservation_mode"
         label: "conservation mode"
     }
 
-    IdeapadSysfsProperty {
-        id: _fnLock
+    property IdeapadSysfsProperty fnLock: IdeapadSysfsProperty {
         file: "fn_lock"
         label: "fn lock"
     }
 
-    IdeapadSysfsProperty {
-        id: _alwaysOnUSB
+    property IdeapadSysfsProperty alwaysOnUSB: IdeapadSysfsProperty {
         file: "usb_charging"
         label: "always on usb"
     }
 
-    LegionSysfsProperty {
-        id: _superKey
+    property LegionSysfsProperty superKey: LegionSysfsProperty {
         file: "winKey"
         label: "super key"
     }
 
-    LegionSysfsProperty {
-        id: _touchpad
+    property LegionSysfsProperty touchpad: LegionSysfsProperty {
         file: "touchpad"
         label: "touchpad"
     }
 
-    LegionSysfsProperty {
-        id: _fastcharge
+    property LegionSysfsProperty fastCharge: LegionSysfsProperty {
         file: "rapidcharge"
         label: "fast charge"
     }
 
-    LegionSysfsProperty {
-        id: _overdrive
+    property LegionSysfsProperty overdrive: LegionSysfsProperty {
         file: "overdrive"
         label: "overdrive"
     }
 
-    LegionSysfsProperty {
-        id: _hybrid
+    // TODO: reboot after applying changes
+    property LegionSysfsProperty hybrid: LegionSysfsProperty {
         file: "gsync"
         label: "hybrid graphics"
     }
