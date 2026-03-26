@@ -41,6 +41,12 @@ and adds your user to that group.
 - `Standard` and `Efficient Thermal Dissipation` fan control modes don't work on
   my Ideapad. They operate like `Dust Cleaning` mode.
 
+## TODO
+
+- [ ] Add IPC interface
+- [ ] Add reboot dialog
+- [ ] Animated fan during dust cleaning
+
 ## Disclaimer
 
 - This project is **NOT AFFILIATED WITH LENOVO IN ANY WAY**.
