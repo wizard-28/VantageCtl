@@ -32,7 +32,7 @@ QtObject {
     property var _availabilityChecker: Process {
         id: availabilityChecker
         running: false
-        command: ["/bin/bash", "-c", `test -f ${root.path} && (test -w ${root.path} && echo "2" || echo "1") || echo "0"`]
+        command: ["/bin/sh", "-c", `test -f ${root.path} && (test -w ${root.path} && echo "2" || echo "1") || echo "0"`]
         stdout: StdioCollector {
             onStreamFinished: {
                 const r = parseInt(text);
