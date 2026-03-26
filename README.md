@@ -1,5 +1,7 @@
 # Noctalia Vantage
 
+![preview](preview.png)
+
 ## Requirements
 
 - [LenovoLegionLinux](https://github.com/johnfanv2/LenovoLegionLinux) kernel module for:
