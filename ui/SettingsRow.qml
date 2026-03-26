@@ -19,7 +19,7 @@ Item {
     signal toggled(bool checked)
 
     width: ListView.view.width
-    height: 64
+    height: 64 * Style.uiScaleRatio
 
     MouseArea {
         id: mouseArea
@@ -48,7 +48,7 @@ Item {
         ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
-            spacing: 2
+            spacing: Style.marginS
 
             NText {
                 text: root.title
