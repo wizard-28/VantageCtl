@@ -6,7 +6,7 @@
   "author": "Sourajyoti Basak",
   "license": "GPL-3.0-or-later",
   "repository": "https://github.com/wizard-28/noctalia-plugins",
-  "description": "Lenovo vantage for noctalia",
+  "description": "Lenovo Vantage for Noctalia Shell",
   "entryPoints": {
     "barWidget": "BarWidget.qml",
     "panel": "Panel.qml"
