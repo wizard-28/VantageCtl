@@ -2,7 +2,22 @@
   "widget": {
     "title": "Noctalia Vantage"
   },
+  "ipc": {
+    "toggle": {
+      "error": "Неизвестный параметр: {setting}",
+      "turned_on": "{setting} Включёно",
+      "turned_off": "{setting} Выключено"
+    },
+    "fan": {
+      "error": "Неизвестный режим вентиляторов: {mode}",
+      "success": "Режим вентиляторов переключён на {mode}"
+    }
+  },
   "panel": {
+    "unavailable": {
+      "title": "Vantage не поддерживается",
+      "description": "Убедитесь, что включены нужные модули ядра"
+    },
     "close": "Закрыть",
     "fan": {
       "title": "Режим вентиляторов",
