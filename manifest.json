@@ -9,7 +9,8 @@
   "description": "Lenovo Vantage for Noctalia Shell",
   "entryPoints": {
     "barWidget": "BarWidget.qml",
-    "panel": "Panel.qml"
+    "panel": "Panel.qml",
+    "main": "Main.qml"
   },
   "tags": ["Bar", "Panel", "System"],
   "dependencies": {

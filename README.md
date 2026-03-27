@@ -36,6 +36,21 @@ sudo scripts/setup.sh
 This makes the relevant files writable by the `vantage` group
 and adds your user to that group.
 
+## IPC Interface
+
+```bash
+qs -c noctalia-shell ipc call on <setting>
+qs -c noctalia-shell ipc call off <setting>
+qs -c noctalia-shell ipc call toggle <setting>
+qs -c noctalia-shell ipc call fan <mode>
+
+<setting>:
+  conservation | fnLock | alwaysOnUSB | superKey | touchpad | fastCharge | overdrive | hybrid
+
+<mode>:
+  superSilent | standard | dustCleaning | efficientThermalDissipation
+```
+
 ## Issues
 
 - `Standard` and `Efficient Thermal Dissipation` fan control modes don't work on
@@ -43,7 +58,6 @@ and adds your user to that group.
 
 ## TODO
 
-- [ ] Add IPC interface
 - [ ] Add reboot dialog
 - [ ] Animated fan during dust cleaning
 
@@ -60,3 +74,7 @@ GNU Public License 3.0 or later
 
 - [PlasmaVantage](https://gitlab.com/Scias/plasmavantage) for showing how to do things.
 - [ideapad-battery-health](https://github.com/noctalia-dev/noctalia-plugins/tree/main/ideapad-battery-health) for showing how to do rest of the things.
+
+```
+
+```

@@ -2,6 +2,17 @@
   "widget": {
     "title": "Noctalia Vantage"
   },
+  "ipc": {
+    "toggle": {
+      "error": "Invalid setting: {setting}",
+      "turned_on": "{setting} turned on",
+      "turned_off": "{setting} turned off"
+    },
+    "fan": {
+      "error": "Invalid fan mode: {mode}",
+      "success": "Switched fan mode to {mode}"
+    }
+  },
   "panel": {
     "close": "Close",
     "fan": {
