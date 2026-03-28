@@ -2,8 +2,9 @@ import QtQuick
 import qs.Commons
 import Quickshell.Io
 
-QtObject {
+Item {
     id: root
+    visible: false
 
     required property string path
     required property string label
@@ -11,34 +12,25 @@ QtObject {
     property bool available: false
     property bool writeable: false
     property var value: null
-    property var validValues: null
-    property var transformWrite: v => typeof v === "boolean" ? (v ? 1 : 0) : v
 
     readonly property string sudoPrefix: "pkexec"
     property var writeCommand: val => ["sh", "-c", `echo ${val} > ${root.path}`]
-    property var parser: function (raw) {
-        const v = parseInt(raw?.trim());
-
-        if (isNaN(v)) {
-            Logger.w("NoctaliaVantage", root.label + ": invalid value:", raw);
-            return undefined;
-        }
-
-        return v === 1;
-    }
 
     signal writeFinished(bool success)
 
-    property var _availabilityChecker: Process {
+    Process {
         id: availabilityChecker
         running: false
         command: ["/bin/sh", "-c", `test -f ${root.path} && (test -w ${root.path} && echo "2" || echo "1") || echo "0"`]
+
         stdout: StdioCollector {
             onStreamFinished: {
                 const r = parseInt(text);
                 root.available = r >= 1;
                 root.writeable = r === 2;
+
                 Logger.i("NoctaliaVantage", root.label, "available:", root.available, "writable:", root.writeable);
+
                 if (root.available)
                     root.reload();
             }
@@ -50,15 +42,16 @@ QtObject {
             reload();
     }
 
-    property var _reader: FileView {
+    FileView {
         id: reader
         path: root.path
         printErrors: false
 
         onLoaded: {
-            const parsed = root.parser(text());
+            const parsed = root.parse(text());
             if (parsed === undefined)
                 return;
+
             if (parsed !== root.value) {
                 root.value = parsed;
                 Logger.i("NoctaliaVantage", `${root.label} ->`, parsed);
@@ -68,7 +61,7 @@ QtObject {
         }
     }
 
-    property var _writer: Process {
+    Process {
         id: writer
         running: false
         property var pending: null
@@ -81,25 +74,48 @@ QtObject {
                 root.value = pending;
                 root.writeFinished(true);
             } else {
-                Logger.e("NoctaliaVantage", `${root.label} write failed, code: `, code);
+                Logger.e("NoctaliaVantage", `${root.label} write failed, code:`, code);
                 root.writeFinished(false);
             }
         }
+    }
+
+    function parse(raw) {
+        const v = parseInt(raw?.trim());
+
+        if (isNaN(v)) {
+            Logger.w("NoctaliaVantage", root.label + ": invalid value:", raw);
+            return undefined;
+        }
+
+        return v === 1;
+    }
+
+    function transformWrite(value) {
+        if (typeof value === "boolean")
+            return value ? 1 : 0;
+        return value;
     }
 
     function checkAvailability() {
         availabilityChecker.running = true;
     }
 
+    function validate(newVal): bool {
+      // overwritten in subclasses
+      return true;
+    }
+
     function set(newVal) {
         Logger.i("NoctaliaVantage", `Setting ${root.label} mode ->`, newVal);
+
         if (!root.available) {
             Logger.e("NoctaliaVantage", `${root.label}: not available`);
             return;
         }
 
-        if (root.validValues && !root.validValues.includes(newVal)) {
-            Logger.e("NoctaliaVantage", `${root.label}: invalid value:`, newVal);
+        if (!validate(newVal)) {
+            Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
             return;
         }
 

@@ -6,6 +6,7 @@ import qs.Commons
 QtObject {
     id: root
 
+    // defaults to false, we determine it dynamically later in `Component.onCompleted`
     property bool available: false
 
     readonly property var fanModes: ({
@@ -33,19 +34,30 @@ QtObject {
     property IdeapadSysfsProperty fan: IdeapadSysfsProperty {
         file: "fan_mode"
         label: "fan mode"
-        validValues: [root.fanModes.SuperSilent, root.fanModes.Standard, root.fanModes.DustCleaning, root.fanModes.EfficientThermalDissipation]
-        parser: function (raw) {
+
+        readonly property var validModes: [root.fanModes.SuperSilent, root.fanModes.Standard, root.fanModes.DustCleaning, root.fanModes.EfficientThermalDissipation]
+
+        function parse(raw) {
             const v = parseInt(raw?.trim());
             if (isNaN(v)) {
                 Logger.w("NoctaliaVantage", "Invalid fan value:", raw);
                 return undefined;
             }
-            const bits = v & 7; // Extarct last 3 bits
-            if (this.validValues.includes(bits)) {
+            const bits = v & 7; // Extract last 3 bits
+            if (validModes.includes(bits)) {
                 return bits;
             }
 
             return root.fanModes.SuperSilent;
+        }
+
+        function validate(newVal) {
+          if (!validModes.includes(newVal)) {
+            Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
+            return false;
+          }
+
+          return true;
         }
     }
 
