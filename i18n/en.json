@@ -37,12 +37,12 @@
       "super_key": {
         "title": "Super key",
         "description": "Enables the Super/Windows key",
-        "tooltip": "Whether to enable or not the Super (Windows) key."
+        "tooltip": "Whether to enable the Super (Windows) key or not"
       },
       "touchpad": {
         "title": "Touchpad",
         "description": "Enables the laptop's touchpad",
-        "tooltip": "Whether to enable orthe laptop's touchpad."
+        "tooltip": "Whether to enable the laptop's touchpad or not"
       },
       "conservation": {
         "title": "Battery conservation mode",
@@ -62,7 +62,7 @@
       "overdrive": {
         "title": "Display Overdrive",
         "description": "Reduces the laptop's display latency",
-        "tooltip": "Reduces the display latency in order to limit ghosting and trailing images.\nIncreases power consumption and may introduce othher graphical defects."
+        "tooltip": "Reduces the display latency in order to limit ghosting and trailing images.\nIncreases power consumption and may introduce other graphical defects."
       },
       "hybrid": {
         "title": "Hybrid graphics mode",
