@@ -20,10 +20,10 @@ Item {
         })
 
     readonly property var fanModeMap: ({
-            superSilent: VantageService.fanModes.SuperSilent,
-            standard: VantageService.fanModes.Standard,
-            dustCleaning: VantageService.fanModes.DustCleaning,
-            efficientThermalDissipation: VantageService.fanModes.EfficientThermalDissipation
+            superSilent: VantageService.fan.modes.SuperSilent,
+            standard: VantageService.fan.modes.Standard,
+            dustCleaning: VantageService.fan.modes.DustCleaning,
+            efficientThermalDissipation: VantageService.fan.modes.EfficientThermalDissipation
         })
 
 

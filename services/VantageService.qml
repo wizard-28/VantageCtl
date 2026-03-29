@@ -9,12 +9,6 @@ QtObject {
     // defaults to false, we determine it dynamically later in `Component.onCompleted`
     property bool available: false
 
-    readonly property var fanModes: ({
-            SuperSilent: 0,
-            Standard: 1,
-            DustCleaning: 2,
-            EfficientThermalDissipation: 4
-        })
     readonly property var controls: [fan, conservation, fnLock, alwaysOnUSB, superKey, touchpad, fastCharge, overdrive, hybrid]
 
     component IdeapadSysfsProperty: SysfsProperty {
@@ -35,7 +29,12 @@ QtObject {
         file: "fan_mode"
         label: "fan mode"
 
-        readonly property var validModes: [root.fanModes.SuperSilent, root.fanModes.Standard, root.fanModes.DustCleaning, root.fanModes.EfficientThermalDissipation]
+        readonly property var modes: ({
+                SuperSilent: 0,
+                Standard: 1,
+                DustCleaning: 2,
+                EfficientThermalDissipation: 4
+            })
 
         function parse(raw) {
             const v = parseInt(raw?.trim());
@@ -44,20 +43,20 @@ QtObject {
                 return undefined;
             }
             const bits = v & 7; // Extract last 3 bits
-            if (validModes.includes(bits)) {
+            if (Object.values(modes).includes(bits)) {
                 return bits;
             }
 
-            return root.fanModes.SuperSilent;
+            return modes.SuperSilent;
         }
 
         function validate(newVal) {
-          if (!validModes.includes(newVal)) {
-            Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
-            return false;
-          }
+            if (!Object.values(modes).includes(newVal)) {
+                Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
+                return false;
+            }
 
-          return true;
+            return true;
         }
     }
 

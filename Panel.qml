@@ -256,7 +256,7 @@ Item {
 
                             NIconButton {
                                 icon: "windmill"
-                                onClicked: VantageService.fan.set(VantageService.fanModes.DustCleaning)
+                                onClicked: VantageService.fan.set(VantageService.fan.modes.DustCleaning)
                             }
                         }
                     }
