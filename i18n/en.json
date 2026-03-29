@@ -4,13 +4,25 @@
   },
   "ipc": {
     "toggle": {
-      "error": "Invalid setting: {setting}",
-      "turned_on": "{setting} turned on",
-      "turned_off": "{setting} turned off"
+      "invalid_setting": "Invalid setting: {setting}",
+      "on": {
+        "success": "{setting} turned on",
+        "error": "Failed to turn on {setting}"
+      },
+      "off": {
+        "success": "{setting} turned off",
+        "error": "Failed to turn off {setting}"
+      },
+      "flip": {
+        "error": "Failed to toggle {setting}"
+      }
     },
     "fan": {
-      "error": "Invalid fan mode: {mode}",
-      "success": "Switched fan mode to {mode}"
+      "invalid_mode": "Invalid fan mode: {mode}",
+      "set": {
+        "success": "Switched fan mode to {mode}",
+        "error": "Failed to set fan mode to {mode}"
+      }
     }
   },
   "panel": {

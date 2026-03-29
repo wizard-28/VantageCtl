@@ -4,13 +4,19 @@
   },
   "ipc": {
     "toggle": {
-      "error": "Неизвестный параметр: {setting}",
-      "turned_on": "{setting} Включёно",
-      "turned_off": "{setting} Выключено"
+      "invalid_setting": "Неизвестный параметр: {setting}",
+      "on": {
+        "success": "{setting} Включёно"
+      },
+      "off": {
+        "success": "{setting} Выключено"
+      }
     },
     "fan": {
-      "error": "Неизвестный режим вентиляторов: {mode}",
-      "success": "Режим вентиляторов переключён на {mode}"
+      "invalid_mode": "Неизвестный режим вентиляторов: {mode}",
+      "set": {
+        "success": "Режим вентиляторов переключён на {mode}"
+      }
     }
   },
   "panel": {
