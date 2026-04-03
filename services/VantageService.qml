@@ -37,7 +37,7 @@ QtObject {
         function parse(raw) {
             const v = parseInt(raw?.trim());
             if (isNaN(v)) {
-                Logger.w("NoctaliaVantage", "Invalid fan value:", raw);
+                Logger.w("VantageCtl", "Invalid fan value:", raw);
                 return undefined;
             }
             const bits = v & 7; // Extract last 3 bits
@@ -50,7 +50,7 @@ QtObject {
 
         function validate(newVal) {
             if (!Object.values(modes).includes(newVal)) {
-                Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
+                Logger.e("VantageCtl", "Invalid fan mode:", newVal);
                 return false;
             }
 
@@ -101,7 +101,7 @@ QtObject {
 
     // ===== INIT =====
     Component.onCompleted: {
-        Logger.i("NoctaliaVantage", "Service starting...");
+        Logger.i("VantageCtl", "Service starting...");
         for (let c of controls) {
             c.checkAvailability();
 
@@ -115,10 +115,10 @@ QtObject {
 
     function refresh() {
         if (!root.available) {
-            Logger.w("NoctaliaVantage", "Refresh skipped: service not available");
+            Logger.w("VantageCtl", "Refresh skipped: service not available");
             return;
         }
-        Logger.i("NoctaliaVantage", "Refreshing values...");
+        Logger.i("VantageCtl", "Refreshing values...");
         for (let c of controls) {
             c.reload();
         }

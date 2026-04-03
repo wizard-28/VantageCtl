@@ -1,6 +1,6 @@
 {
-  "id": "noctalia-vantage",
-  "name": "Noctalia Vantage",
+  "id": "vantagectl",
+  "name": "VantageCtl",
   "version": "0.1.1",
   "minNoctaliaVersion": "3.6.0",
   "author": "Sourajyoti Basak",

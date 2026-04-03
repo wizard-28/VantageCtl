@@ -58,13 +58,13 @@ Item {
     Component.onCompleted: {
         if (pluginApi) {
             root.service.refresh();
-            Logger.i("NoctaliaVantage", "Panel initialized");
+            Logger.i("VantageCtl", "Panel initialized");
         }
     }
 
     onVisibleChanged: {
         if (visible) {
-            Logger.i("NoctaliaVantage", "Panel toggled: refereshing service");
+            Logger.i("VantageCtl", "Panel toggled: refereshing service");
             root.service.refresh();
         }
     }

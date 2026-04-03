@@ -47,7 +47,7 @@ Item {
     function setToggle(setting, action) {
         const toggleInterface = toggleMap[setting];
         if (toggleInterface === undefined) {
-            Logger.e("NoctaliaVantage", `Invalid toggle setting: ${setting}`);
+            Logger.e("VantageCtl", `Invalid toggle setting: ${setting}`);
             return Promise.reject({
                 type: "invalid_setting"
             });
@@ -70,7 +70,7 @@ Item {
     function setFanMode(mode) {
         const fanMode = fanModeMap[mode];
         if (fanMode === undefined) {
-            Logger.e("NoctaliaVantage", `Invalid fan mode: ${mode}`);
+            Logger.e("VantageCtl", `Invalid fan mode: ${mode}`);
             return Promise.reject({
                 type: "invalid_mode"
             });
@@ -88,7 +88,7 @@ Item {
                 setting
             }));
         }).catch(err => {
-            Logger.e("NoctaliaVantage", `Toggle failed: ${setting}: ${err.type}`);
+            Logger.e("VantageCtl", `Toggle failed: ${setting}: ${err.type}`);
 
             if (err.type === "invalid_setting") {
                 ToastService.showError(pluginApi?.tr("ipc.toggle.invalid_setting", {
@@ -111,7 +111,7 @@ Item {
         target: "plugin:noctalia-vantage"
 
         function on(setting: string) {
-            Logger.d("NoctaliaVantage", `IPC ON ${setting}`);
+            Logger.d("VantageCtl", `IPC ON ${setting}`);
             root.applyToggle(setting, Main.ToggleAction.On, {
                 success: "ipc.toggle.on.success",
                 error: "ipc.toggle.on.error"
@@ -119,7 +119,7 @@ Item {
         }
 
         function off(setting: string) {
-            Logger.d("NoctaliaVantage", `IPC OFF ${setting}`);
+            Logger.d("VantageCtl", `IPC OFF ${setting}`);
             root.applyToggle(setting, Main.ToggleAction.Off, {
                 success: "ipc.toggle.off.success",
                 error: "ipc.toggle.off.error"
@@ -127,7 +127,7 @@ Item {
         }
 
         function toggle(setting: string) {
-            Logger.d("NoctaliaVantage", `IPC TOGGLE ${setting}`);
+            Logger.d("VantageCtl", `IPC TOGGLE ${setting}`);
             root.applyToggle(setting, Main.ToggleAction.Flip, {
                 success: newState => newState ? "ipc.toggle.on.success" : "ipc.toggle.off.success",
                 error: "ipc.toggle.flip.error"
@@ -135,14 +135,14 @@ Item {
         }
 
         function fan(mode: string) {
-            Logger.d("NoctaliaVantage", `IPC fan ${mode}`);
+            Logger.d("VantageCtl", `IPC fan ${mode}`);
 
             root.setFanMode(mode).then(() => {
                 ToastService.showNotice(pluginApi?.tr("ipc.fan.set.success", {
                     mode
                 }));
             }).catch(err => {
-                Logger.e("NoctaliaVantage", `Fan failed: ${mode}: ${err.type}`);
+                Logger.e("VantageCtl", `Fan failed: ${mode}: ${err.type}`);
 
                 if (err.type === "invalid_mode") {
                     ToastService.showError(pluginApi?.tr("ipc.fan.invalid_mode", {

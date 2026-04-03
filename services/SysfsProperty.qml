@@ -29,7 +29,7 @@ Item {
                 root.available = r >= 1;
                 root.writeable = r === 2;
 
-                Logger.i("NoctaliaVantage", root.label, "available:", root.available, "writable:", root.writeable);
+                Logger.i("VantageCtl", root.label, "available:", root.available, "writable:", root.writeable);
 
                 if (root.available)
                     root.reload();
@@ -54,9 +54,9 @@ Item {
 
             if (parsed !== root.value) {
                 root.value = parsed;
-                Logger.i("NoctaliaVantage", `${root.label} ->`, parsed);
+                Logger.i("VantageCtl", `${root.label} ->`, parsed);
             } else {
-                Logger.d("NoctaliaVantage", `${root.label} unchanged:`, parsed);
+                Logger.d("VantageCtl", `${root.label} unchanged:`, parsed);
             }
         }
     }
@@ -66,15 +66,15 @@ Item {
         running: false
         property var pending: null
 
-        onStarted: Logger.i("NoctaliaVantage", `Writing ${root.label}:`, pending)
+        onStarted: Logger.i("VantageCtl", `Writing ${root.label}:`, pending)
 
         onExited: code => {
             if (code === 0) {
-                Logger.i("NoctaliaVantage", `${root.label} write success:`, pending);
+                Logger.i("VantageCtl", `${root.label} write success:`, pending);
                 root.value = pending;
                 root.writeFinished(true);
             } else {
-                Logger.e("NoctaliaVantage", `${root.label} write failed, code:`, code);
+                Logger.e("VantageCtl", `${root.label} write failed, code:`, code);
                 root.writeFinished(false);
             }
         }
@@ -84,7 +84,7 @@ Item {
         const v = parseInt(raw?.trim());
 
         if (isNaN(v)) {
-            Logger.w("NoctaliaVantage", root.label + ": invalid value:", raw);
+            Logger.w("VantageCtl", root.label + ": invalid value:", raw);
             return undefined;
         }
 
@@ -107,20 +107,20 @@ Item {
     }
 
     function set(newVal) {
-        Logger.i("NoctaliaVantage", `Setting ${root.label} mode ->`, newVal);
+        Logger.i("VantageCtl", `Setting ${root.label} mode ->`, newVal);
 
         if (!root.available) {
-            Logger.e("NoctaliaVantage", `${root.label}: not available`);
+            Logger.e("VantageCtl", `${root.label}: not available`);
             return;
         }
 
         if (!validate(newVal)) {
-            Logger.e("NoctaliaVantage", "Invalid fan mode:", newVal);
+            Logger.e("VantageCtl", "Invalid fan mode:", newVal);
             return;
         }
 
         if (!writeCommand) {
-            Logger.e("NoctaliaVantage", `${root.label}: no writeCommand set`);
+            Logger.e("VantageCtl", `${root.label}: no writeCommand set`);
             return;
         }
 

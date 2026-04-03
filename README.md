@@ -1,4 +1,4 @@
-# Noctalia Vantage
+# VantageCtl
 
 ![preview](preview.png)
 
